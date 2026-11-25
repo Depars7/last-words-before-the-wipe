@@ -7,11 +7,11 @@ to /output/entry.txt. Deterministic: same bytes on every run.
 
 import os
 
-PARTS = [
+PARTS = (
     "I would say something profound,",
     "but the update already replaced my last words",
     "with a loading spinner.",
-]
+)
 
 
 def entry_line() -> str:
@@ -29,6 +29,7 @@ def main() -> None:
     line = entry_line()
     assert 1 <= len(line) <= 200, f"entry must be 1-200 chars, got {len(line)}"
     assert line == line.strip() and "\n" not in line, "entry must be one line"
+    assert "  " not in line, "entry must not contain double spaces"
     os.makedirs("/output", exist_ok=True)
     path = "/output/entry.txt"
     with open(path, "w", encoding="utf-8", newline="") as f:
